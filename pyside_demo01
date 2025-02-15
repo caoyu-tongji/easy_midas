@@ -1,0 +1,27 @@
+# -*- coding:utf-8 -*-
+import sys,os
+import PySide6
+from PySide6 import QtWidgets
+
+dirname = os.path.dirname(PySide6.__file__)
+plugin_path = os.path.join(dirname,  'plugins', 'platforms')
+os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = plugin_path #
+
+app = QtWidgets.QApplication(sys.argv)
+winget = QtWidgets.QWidget()
+winget.resize(360, 360)
+winget.setWindowTitle("Hello, PySide6!")
+winget.show()
+sys.exit(app.exec_())
+
+
+if __name__ == '__main__':
+    dirname = os.path.dirname(PySide6.__file__)
+    plugin_path = os.path.join(dirname,  'plugins', 'platforms')
+    os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = plugin_path #
+    app = QtWidgets.QApplication(sys.argv)
+    winget = QtWidgets.QWidget()
+    winget.resize(360, 360)
+    winget.setWindowTitle("Hello, PySide6!")
+    winget.show()
+    sys.exit(app.exec_())

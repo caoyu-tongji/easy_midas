@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structural Analysis Package 说明文档</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 260px;
+            padding: 20px;
+            background-color: var(--background-color);
+            overflow-y: auto;
+            border-right: 1px solid #dee2e6;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            padding: 30px;
+            max-width: 1200px;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 8px 0;
+            color: var(--secondary-color);
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color);
+            padding-left: 10px;
+        }
+        
+        .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+            margin: 15px 0;
+        }
+        
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+        }
+        
+        table {
+            width: 100%;
+            margin-bottom: 1rem;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+        }
+        
+        th {
+            background-color: var(--background-color);
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        h1, h2, h3 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+        
+        .alert {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 侧边导航栏 -->
+            <div class="sidebar">
+                <h2>目录</h2>
+                <nav class="nav-menu">
+                    <a class="nav-link" href="#introduction">项目简介</a>
+                    <a class="nav-link" href="#features">主要功能</a>
+                    <a class="nav-link" href="#installation">安装</a>
+                    <a class="nav-link" href="#usage">使用说明</a>
+                    <a class="nav-link" href="#basic-usage">基本用法</a>
+                    <a class="nav-link" href="#result-types">结果类型</a>
+                    <a class="nav-link" href="#settings">参数设置</a>
+                    <a class="nav-link" href="#examples">示例</a>
+                    <a class="nav-link" href="#basic-operations">基础操作</a>
+                    <a class="nav-link" href="#pre-processing">前处理</a>
+                    <a class="nav-link" href="#post-processing">后处理</a>
+                    <a class="nav-link" href="#notes">注意事项</a>
+                    <a class="nav-link" href="#support">技术支持</a>
+                </nav>
+            </div>
+
+            <!-- 主要内容 -->
+            <main class="col-md-9 col-lg-10 main-content">
+                <section id="intro" class="section">
+                    <h1>Structural Analysis Package</h1>
+                    <p class="lead">基于 Python 的结构分析后处理工具包，用于提取和可视化 MIDAS 结构分析结果。</p>
+                </section>
+
+                <section id="features" class="section">
+                    <h2>主要功能</h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h3>基础操作</h3>
+                            <ul>
+                                <li>MIDAS Civil操作
+                                    <ul>
+                                        <li>打开软件</li>
+                                        <li>打开模型文件</li>
+                                        <li>运行分析</li>
+                                        <li>保存文件</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h3>前处理功能</h3>
+                            <ul>
+                                <li>单位系统设置</li>
+                                <li>节点处理
+                                    <ul>
+                                        <li>创建/查询</li>
+                                        <li>更新/删除</li>
+                                    </ul>
+                                </li>
+                                <li>单元处理
+                                    <ul>
+                                        <li>梁单元</li>
+                                        <li>桁架单元</li>
+                                        <li>索单元</li>
+                                    </ul>
+                                </li>
+                                <li>边界条件
+                                    <ul>
+                                        <li>支承约束</li>
+                                        <li>弹性支撑</li>
+                                        <li>刚性/弹性连接</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <h3>施工阶段处理</h3>
+                                    <ul>
+                                        <li>施工阶段查询</li>
+                                        <li>施工阶段信息获取</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h3>后处理功能</h3>
+                            <ul>
+                                <li>结果提取
+                                    <ul>
+                                        <li>梁单元结果</li>
+                                        <li>桁架单元结果</li>
+                                        <li>索单元结果</li>
+                                        <li>节点位移结果</li>
+                                    </ul>
+                                </li>
+                                <li>数据处理
+                                    <ul>
+                                        <li>多种选择方式</li>
+                                        <li>灵活单位设置</li>
+                                        <li>数据格式化</li>
+                                    </ul>
+                                </li>
+                                <li>可视化功能
+                                    <ul>
+                                        <li>内力图</li>
+                                        <li>应力图</li>
+                                        <li>位移图</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="installation" class="section">
+                    <h2>安装指南</h2>
+                    <pre><code class="language-bash">pip install structural-analysis</code></pre>
+                </section>
+
+                <section id="usage" class="section">
+                    <h2>使用说明</h2>
+                    
+                    <div id="basic-usage">
+                        <h3>基本用法</h3>
+                        <pre><code class="language-python">
+from structural_analysis.post_processor import create_processor
+
+# 创建处理器
+processor = create_processor("beam_force")
+
+# 提取结果
+results = processor.extract_general(
+    elems=[1, 2, 3],
+    load_case="COMB1"
+)
+
+# 处理数据
+df = processor.process_general_results(results)
+
+# 绘制结果
+processor.plot_results(df, component="Moment-y")
+                        </code></pre>
+                    </div>
+
+                    <div id="result-types">
+                        <h3>结果类型</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>类型标识</th>
+                                    <th>说明</th>
+                                    <th>支持的分析类型</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>beam_force</td>
+                                    <td>梁单元内力</td>
+                                    <td>General/Construction</td>
+                                </tr>
+                                <tr>
+                                    <td>beam_stress</td>
+                                    <td>梁单元应力</td>
+                                    <td>General/Construction</td>
+                                </tr>
+                                <!-- 其他结果类型... -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="parameters">
+                        <h3>参数设置</h3>
+                        <pre><code class="language-python">
+kwargs = {
+    # 单位设置
+    "force_unit": "N",     # 力单位
+    "dist_unit": "mm",     # 距离单位
+    
+    # 输出格式
+    "format_style": "Fixed",  # 数据格式
+    "decimal_places": 6       # 小数位数
+}
+                        </code></pre>
+                    </div>
+                </section>
+
+                <section id="examples" class="section">
+                    <h2>示例</h2>
+                    
+                    <div id="basic-operations">
+                        <h3>基础操作示例</h3>
+                        <pre><code class="language-python">
+from structural_analysis.operations import MidasOperations
+
+# 打开MIDAS Civil并加载模型
+civil_path = "C:/Program Files/MIDAS/Civil/Civil.exe"
+model_path = "C:/Projects/bridge.mcb"
+MidasOperations.open_file(civil_path, model_path)
+
+# 运行分析
+MidasOperations.analyze()
+
+# 保存文件
+MidasOperations.save_file("C:/Projects/bridge_new.mcb")
+                        </code></pre>
+                    </div>
+
+                    <div id="pre-processing">
+                        <h3>前处理示例</h3>
+                        
+                        <h4>1. 单位设置与材料定义</h4>
+                        <pre><code class="language-python">
+from structural_analysis.pre_processor import PreProcessor
+
+# 设置单位系统
+PreProcessor.set_units(force_unit="kN", dist_unit="m")
+
+# 定义钢材
+PreProcessor.define_material(
+    material_id=1,
+    TYPE="STEEL",
+    NAME="Q345",
+    ELAST=2.06e8,
+    POISN=0.3,
+    DEN=7849.0474
+)
+                        </code></pre>
+
+                        <h4>2. 节点处理</h4>
+                        <pre><code class="language-python">
+from structural_analysis.pre_processor import NodeProcessor
+
+node_proc = NodeProcessor()
+
+# 创建节点
+node_data = {
+    "Assign": {
+        "1": {"X": 0.0, "Y": 0.0, "Z": 0.0},
+        "2": {"X": 5.0, "Y": 0.0, "Z": 0.0}
+    }
+}
+node_proc.create(node_data)
+
+# 查询节点
+nodes = node_proc.query()
+                        </code></pre>
+
+                        <h4>3. 单元处理</h4>
+                        <pre><code class="language-python">
+from structural_analysis.pre_processor import BeamElement, TrussElement, CableElement
+
+# 创建梁单元
+beam = BeamElement()
+beam.create(
+    element_id=1,
+    matl=1,
+    sect=1,
+    nodes=[1, 2],
+    angle=0
+)
+
+# 创建桁架单元
+truss = TrussElement()
+truss.create(
+    element_id=2,
+    matl=1,
+    sect=2,
+    nodes=[2, 3]
+)
+
+# 创建索单元
+cable = CableElement()
+cable.create(
+    element_id=3,
+    matl=1,
+    sect=3,
+    nodes=[3, 4],
+    cable_type=3,
+    non_len=1.0
+)
+                        </code></pre>
+
+                        <h4>4. 边界条件</h4>
+                        <pre><code class="language-python">
+from structural_analysis.pre_processor import BoundaryConditionProcessor
+
+bc_proc = BoundaryConditionProcessor()
+
+# 添加支承约束
+bc_proc.add_support(
+    node_id=1,
+    dx=True, dy=True, dz=True,
+    rx=True, ry=True, rz=True
+)
+
+# 添加弹性支撑
+bc_proc.add_elastic_support(
+    node_id=2,
+    kx=1000, ky=1000, kz=1000
+)
+                        </code></pre>
+                    </div>
+
+                    <div id="post-processing">
+                        <h3>后处理示例</h3>
+                        
+                        <h4>1. 梁单元内力分析</h4>
+                        <pre><code class="language-python">
+# 创建梁单元内力处理器
+processor = create_processor("beam_force")
+
+# 提取结果
+results = processor.extract_general(
+    elems=[101, 102, 103],
+    load_case="COMB1",
+    force_unit="kN",
+    dist_unit="m"
+)
+
+# 处理数据
+df = processor.process_general_results(results)
+processor.plot_results(df, component="Moment-y")
+                        </code></pre>
+                        
+                        <h4>2. 桁架单元分析</h4>
+                        <pre><code class="language-python">
+# 创建桁架单元内力处理器
+truss_processor = create_processor("truss_force")
+
+# 提取内力
+results = truss_processor.extract_general(
+    elems="1 to 10",
+    load_case="COMB1"
+)
+
+# 处理并绘图
+df = truss_processor.process_general_results(results)
+truss_processor.plot_results(df, component="Axial")
+                        </code></pre>
+                        
+                        <h4>3. 索单元分析</h4>
+                        <pre><code class="language-python">
+# 创建索单元内力处理器
+cable_processor = create_processor("cable_force")
+
+# 提取施工阶段结果
+results = cable_processor.extract_construction(
+    elems="1 to 10",
+    load_case="合计(CS)",
+    stages=["CS1:001", "CS2:001"]
+)
+
+# 处理并绘图
+df_list = cable_processor.process_construction_results(results)
+cable_processor.plot_results(df_list, component="Tension")
+                        </code></pre>
+                        
+                        <h4>4. 节点位移分析</h4>
+                        <pre><code class="language-python">
+# 创建节点位移处理器
+disp_processor = create_processor("displacement")
+
+# 提取位移
+results = disp_processor.extract_general(
+    nodes=[1, 2, 3],
+    load_case="COMB1"
+)
+
+# 处理并绘图
+df = disp_processor.process_general_results(results)
+disp_processor.plot_results(df, component="DZ")
+                        </code></pre>
+                    </div>
+
+                    <div id="construction-stage-example">
+                        <h3>5. 施工阶段处理</h3>
+                        <div class="example-block">
+                            <h4>方法1：直接使用施工阶段处理器</h4>
+                            <pre><code class="language-python">
+from structural_analysis import ConstructionStageProcessor
+
+# 创建施工阶段处理器
+stages_proc = ConstructionStageProcessor()
+
+# 查询施工阶段
+stages = stages_proc.query_construction_stages()
+print("当前施工阶段:", stages)
+                            </code></pre>
+                        </div>
+
+                        <div class="example-block">
+                            <h4>方法2：通过MidasCivil接口访问</h4>
+                            <pre><code class="language-python">
+from structural_analysis import MidasCivil
+
+# 创建MIDAS Civil接口实例
+midas = MidasCivil()
+
+# 查询施工阶段
+stages = midas.construction.query_construction_stages()
+print("当前施工阶段:", stages)
+                            </code></pre>
+                        </div>
+
+                        <div class="example-block">
+                            <h4>返回数据格式示例</h4>
+                            <pre><code class="language-python">
+# 施工阶段查询返回数据示例
+{
+    "STAG": {
+        "1": {
+            "NAME": "CS1",
+            "DESC": "第一施工阶段",
+            "TYPE": "FORWARD"
+        },
+        "2": {
+            "NAME": "CS2",
+            "DESC": "第二施工阶段",
+            "TYPE": "FORWARD"
+        }
+    }
+}
+                            </code></pre>
+                        </div>
+
+                        <div class="notes">
+                            <h4>说明</h4>
+                            <ul>
+                                <li>返回数据中的 "STAG" 包含所有施工阶段信息</li>
+                                <li>每个施工阶段包含以下属性：
+                                    <ul>
+                                        <li>NAME: 施工阶段名称</li>
+                                        <li>DESC: 施工阶段描述</li>
+                                        <li>TYPE: 施工阶段类型（FORWARD/BACKWARD）</li>
+                                    </ul>
+                                </li>
+                                <li>施工阶段编号从1开始递增</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="notes" class="section">
+                    <h2>注意事项</h2>
+                    <div class="alert alert-info">
+                        <h4>单元/节点选择</h4>
+                        <ul>
+                            <li>确保提供的编号在模型中存在</li>
+                            <li>注意编号范围的合理性</li>
+                            <li>确认结构组名称的正确性</li>
+                        </ul>
+                    </div>
+                    <div class="alert alert-warning">
+                        <h4>单位系统</h4>
+                        <ul>
+                            <li>保持输入输出单位的一致性</li>
+                            <li>注意不同类型结果的默认单位</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="support" class="section">
+                    <h2>技术支持</h2>
+                    <ul>
+                        <li>文档：<a href="https://structural-analysis.readthedocs.io/">在线文档</a></li>
+                        <li>问题反馈：<a href="https://github.com/yourusername/structural-analysis/issues">GitHub Issues</a></li>
+                        <li>邮箱：2330723@tongji.edu.cn</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-bash.min.js"></script>
+</body>
+</html> 
